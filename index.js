@@ -74,8 +74,10 @@ let mesBoutons = [
 ];
 
 let slotScore = document.getElementById("score");
-let texteScore = `Votre score est de : ${victoire} / ${partiesJouees}`;
-slotScore.innerHTML = texteScore;
+function majScore() {
+  let texteScore = `Votre score est de : ${victoire} / ${partiesJouees}`;
+  slotScore.innerHTML = texteScore;
+}
 
 mesBoutons.forEach((boutons) => {
   boutons.addEventListener("click", () => {
@@ -83,7 +85,8 @@ mesBoutons.forEach((boutons) => {
     let slotJoueur = document.getElementById("resultat");
 
     if (choixJoueur !== "bug") {
-      let VS = document.createTextNode("VS");
+      let spanVS = document.createElement("span");
+      spanVS.innerText = "VS";
       let imageJoueur = document.createElement("img");
       imageJoueur.src = images[choixJoueur].src;
       imageJoueur.alt = images[choixJoueur].alt;
@@ -100,7 +103,7 @@ mesBoutons.forEach((boutons) => {
         slotJoueur.removeChild(slotJoueur.firstChild);
       }
       slotJoueur.appendChild(imageJoueur);
-      slotJoueur.appendChild(VS);
+      slotJoueur.appendChild(spanVS);
       slotJoueur.appendChild(imageAdversaire);
 
       if (imageJoueur === "bug") {
@@ -116,11 +119,13 @@ mesBoutons.forEach((boutons) => {
         console.log("perdu");
         slotJoueur.style.background = "red";
         partiesJouees++;
+        majScore();
       } else {
         console.log("gagné");
         slotJoueur.style.background = "green";
         partiesJouees++;
         victoire++;
+        majScore();
       }
     }
   });
